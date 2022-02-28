@@ -1,0 +1,32 @@
+
+{% extends 'base2.html' %}
+
+{% block content %}
+<h1>
+This will connect to the database and allow viewing, updating and deleting items
+</h1>
+
+<table id="inventory">
+    <tr>
+        <th>Product ID</th>
+        <th>Created</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Location</th>
+    </tr>  
+
+    {% for item in inventory %}
+    <tr>  
+        <td class="c2">{{item.id}}</td>
+       <td class="c3">{{item.created}}</td>
+       <td class="c4"><SPAN>{{item.itemName}}</SPAN></td>
+       <td class="c5"><SPAN>{{item.description}}</SPAN></td>
+       <td class="c5"><SPAN>{{item.location}}</SPAN></td>
+    </tr>
+    {% endfor %}
+    </table>
+    
+
+{% endblock %}
+
+
