@@ -1,0 +1,16 @@
+h1 {
+    border: 2px #eee solid;
+    color: rgb(20, 2, 2);
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    color: rgb(21, 70, 160);
+    text-align: left;
+   
+}
+
+body {
+    background-color: #a7daaa;
+  }
