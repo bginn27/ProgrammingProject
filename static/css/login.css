@@ -238,7 +238,8 @@ a {
     .site-mobile-menu .site-mobile-menu-header .site-mobile-menu-logo {
       float: left;
       margin-top: 10px;
-      margin-left: 0px; }
+      margin-left: 0px; 
+    }
       .site-mobile-menu .site-mobile-menu-header .site-mobile-menu-logo a {
         display: inline-block;
         text-transform: uppercase; }

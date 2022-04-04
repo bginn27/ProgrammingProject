@@ -32,8 +32,8 @@ p {
   font-weight: 300;
   font-size: 12px; }
 h1 {
-  font-size: 20px;
-  color: #000000;
+  font-size: 17px;
+  color: #ffffff;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -180,7 +180,7 @@ a {
             left: 100%;
             top: 0; }
           .site-navbar .site-navigation .site-menu .has-children .dropdown > li.has-children:hover > a, .site-navbar .site-navigation .site-menu .has-children .dropdown > li.has-children:active > a, .site-navbar .site-navigation .site-menu .has-children .dropdown > li.has-children:focus > a {
-            background: #fafafb; }
+            background: #b5b5e2; }
       .site-navbar .site-navigation .site-menu .has-children:hover > a, .site-navbar .site-navigation .site-menu .has-children:focus > a, .site-navbar .site-navigation .site-menu .has-children:active > a {
         color: #5d5d81; }
         .site-navbar .site-navigation .site-menu .has-children:hover > a span, .site-navbar .site-navigation .site-menu .has-children:focus > a span, .site-navbar .site-navigation .site-menu .has-children:active > a span {
@@ -341,6 +341,7 @@ footer {
   text-align: center;
   width: 100%;
   bottom: 0;
+  color:#f8f9fa
 }
 
 .pages {
@@ -366,7 +367,7 @@ footer {
 #inventory td, #inventory th {
   border: 1px solid #ddd;
   padding: 8px;
-  background-color: #BFCDE0;
+  background-color: #b1c5e1;
 }
 /* 
 #inventory tr::after
@@ -374,7 +375,7 @@ footer {
 
 
 #inventory tr:hover {
-  background-color: #fdfdfd;
+  background-color: #7a92c0;
 }
 
 #inventory th {
@@ -382,7 +383,7 @@ footer {
   padding-bottom: 12px;
   text-align: left;
   background-color: #5c698e;
-  color: #FEFCFD;
+  color: #fcfcfe;
 }
 
 table.center {

@@ -59,14 +59,24 @@ def inventory():
     conn.close()
     return render_template('inventory.html', inventory=inventory)
       
-    conn = sqlite3.connect('database.db')
-    cur = conn.cursor()
-    add_inventory = cur.execute("""
-    INSERT INTO inventory (id, itemName, description, location) 
-    VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
-    conn.commit()
-    conn.close()
-    return redirect("/inventory")
+    # conn = sqlite3.connect('database.db')
+    # cur = conn.cursor()
+    # add_inventory = cur.execute("""
+    # INSERT INTO inventory (id, itemName, description, location) 
+    # VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
+    # conn.commit()
+    # conn.close()
+    # return redirect("/inventory")
+
+@app.route('/inventory/<id>')
+def inventoryID(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
+        for item in inventory[0]:
+            print(item)
+        conn.close()
+        return render_template('inventory.html', inventory=inventory)
 
 
 # remove row from table and return to main inventory page
