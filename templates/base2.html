@@ -52,8 +52,23 @@
                   </li>
                 </ul>
               </li>
-              <li><a href="invoices"><span>Invoices</span></a></li>
-              <li><a href="login"><span>Login</span></a></li>
+              <li class="has-children">
+                <a href="users"><span>Users</span></a>
+                <ul class="dropdown arrow-top">
+                  <li><a href="users">View Users</a></li>
+                  <li><a href="useradd">Add User</a></li>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-children">
+                <a href="orders"><span>Orders</span></a>
+                <ul class="dropdown arrow-top">
+                  <li><a href="orders">View Orders</a></li>
+                  <li><a href="orderadd">Add Order</a></li>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="logout"><a href="/logout">Logout</a></li>
             </ul>
           </nav>
       </div>

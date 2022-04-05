@@ -8,13 +8,18 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO inventory (id, itemName, description, location) VALUES (?, ?, ?, ?)",
-            (1000, 'Darth Vader Lego', 'Big hat, small body', "Lego Store")
+cur.execute("INSERT INTO inventory (itemName, description, location) VALUES ( ?, ?, ?)",
+            ('TestProduct1', 'Testing product 1', "School")
             )
 
-cur.execute("INSERT INTO inventory (id, itemName, description, location) VALUES (?, ?, ?, ?)",
-            (1001, 'Chocolate Chip Cookie', 'Delicious goodness from heaven', "Heaven")
+cur.execute("INSERT INTO inventory (itemName, description, location) VALUES (?, ?, ?)",
+            ('TestProduct2', 'Testing product 2', "School")
             )
+
+cur.execute("INSERT INTO users (username, password) VALUES (?, ?)",
+            ('Brooke', 'Test123')
+            )
+
  
 connection.commit()
 connection.close()

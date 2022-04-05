@@ -1,0 +1,26 @@
+
+{% extends 'base2.html' %}
+
+{% block content %}
+
+<h1>
+Enter details about the product you wish to add.
+</h1>
+
+    <div class="formcontainer">
+        <form action="{{ url_for("orderadd")}}" method="post">
+
+            <label for="customer">Customer Name:</label>
+            <input type="text" id="customer" name="customer" placeholder="Customer Name" required><br><br>
+            <label for="item">Item Ordered:</label>
+            <input type="text" id="item" name="item" placeholder="Item Ordered" required><br><br>
+            <label for="total">Total:</label>
+            <input type="number" inputmode="decimal" min="0" step=".01" id="total" name="total" placeholder="Total" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+  
+{% endblock %}
+
+

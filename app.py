@@ -1,11 +1,14 @@
+from ast import And
 from fileinput import close
+from operator import and_
 import re
 import sqlite3
-from flask import Flask, render_template, request, url_for, redirect, flash
+from flask import Flask, render_template, request, url_for, redirect, flash, session
 from sqlalchemy import false
 from werkzeug.exceptions import abort
 
 app = Flask(__name__)
+app.secret_key = 'SecretKey'
 
 from flask import Flask, render_template
 
@@ -22,19 +25,41 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     if request.method == 'POST':
-        print('running post')
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            print('checking pass')
-            error = 'Invalid Credentials. Please try again.'
+        username = request.form.get("username")
+        password = request.form.get("password")
+        #Get record for user from DB
+        conn = get_db_connection()
+        dbexe = 'SELECT username, password FROM users WHERE username="{}"'.format(username)
+        print(dbexe)
+        login = conn.execute(dbexe).fetchall()
+        conn.close()
+
+        if username.lower() == login[0][0].lower() and password == login[0][1]:
+            print('Success!')
+            session['user'] = username
+            return render_template('home.html') 
         else:
-            print('pass accepted')
-            loggedIn = True
-            return redirect("/")
+            print('Bad Username and/or Password!')
+            flash('Bad Username and/or Password!')
+            return redirect("/login")
+
+# logout page
+@app.route('/logout')
+def logout():
+    session.pop('user')         
+    return redirect('/login')
+
+
 
 # home page
 @app.route('/')
 def home():
-    return render_template('home.html')
+    if('user' in session):
+        return render_template('home.html')
+    else:
+        return redirect('/login')
+
+
 
 
 # main inventory page
@@ -53,7 +78,6 @@ def inventoryadd():
         return render_template('inventoryadd.html')
    
     if request.method == "POST":
-        itemNum = request.form.get("itemNum")
         itemName = request.form.get("itemName")
         description = request.form.get("description")
         location = request.form.get("location")
@@ -61,8 +85,8 @@ def inventoryadd():
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_inventory = cur.execute("""
-        INSERT INTO inventory (id, itemName, description, location) 
-        VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
+        INSERT INTO inventory (itemName, description, location) 
+        VALUES (?, ?, ?)""",(itemName, description, location))
         conn.commit()
         conn.close()
         return redirect("/inventory")
@@ -82,7 +106,7 @@ def inventoryUpdate(id):
         location = request.form.get("location")
         #DB Connection
         conn = get_db_connection()
-        dbexe = """UPDATE inventory SET itemName='{}', description='{}', location='{}' WHERE id={}""".format(itemName, description, location,itemNum)
+        dbexe = """UPDATE inventory SET itemName='{}', description='{}', location='{}', updated=CURRENT_TIMESTAMP WHERE id={}""".format(itemName, description, location,itemNum)
         print(dbexe)
         db_update = conn.execute(dbexe)
         conn.commit()
@@ -111,12 +135,143 @@ def inventoryRemove(id):
 
 
 
+# main users page
+@app.route('/users')
+def users():
+    conn = get_db_connection()
+    users = conn.execute("SELECT * FROM users").fetchall()
+    conn.close()
+    return render_template('users.html', users=users)
 
-# invoices page
-@app.route('/invoices', methods=["GET", "POST"])
-def invoices():
+# add user to table and return to main inventory page
+@app.route('/useradd', methods=["GET", "POST"] )
+def useradd():
     if request.method == "GET":
-        return render_template('invoices.html')
+        return render_template('useradd.html')
+   
+    if request.method == "POST":
+        username = request.form.get("username").lower()
+        password = request.form.get("password")
+       
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        add_users = cur.execute("""
+        INSERT INTO users (username,password) 
+        VALUES (?, ?)""",(username, password))
+        conn.commit()
+        conn.close()
+        return redirect("/users")
+
+@app.route('/users/update/<int:id>', methods=["GET","POST"] )
+def userUpdate(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        users = conn.execute("SELECT * FROM users WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('userupdate.html', users=users)
+    if request.method == "POST":
+        userID = id
+        username = request.form.get("username")
+        password = request.form.get("password")
+        #DB Connection
+        conn = get_db_connection()
+        dbexe = """UPDATE users SET username='{}', password='{}' WHERE id={}""".format(username, password, id)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/users')
+
+@app.route('/users/remove/<int:id>', methods=["GET","POST"] )
+def userRemove(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        users = conn.execute("SELECT * FROM users WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('userremove.html', users=users)
+    #DB Connection
+    if request.method == "POST":
+        userID = id
+        conn = get_db_connection()
+        dbexe = """DELETE FROM users WHERE id = {}""".format(userID)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/users')
+
+
+
+# main orders page
+@app.route('/orders')
+def orders():
+    conn = get_db_connection()
+    orders = conn.execute("SELECT * FROM orders").fetchall()
+    conn.close()
+    return render_template('orders.html', orders=orders)
+
+# add user to table and return to main inventory page
+@app.route('/orderadd', methods=["GET", "POST"] )
+def orderadd():
+    if request.method == "GET":
+        return render_template('orderadd.html')
+   
+    if request.method == "POST":
+        customer = request.form.get("customer")
+        item = request.form.get("item")
+        total = request.form.get("total")
+       
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        add_orders = cur.execute("""
+        INSERT INTO orders (customer,item,total,status) 
+        VALUES (?, ?, ?, ?)""",(customer, item, total, 'NEW'))
+        conn.commit()
+        conn.close()
+        return redirect("/orders")
+
+@app.route('/orders/update/<int:id>', methods=["GET","POST"] )
+def orderUpdate(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        orders = conn.execute("SELECT * FROM orders WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('orderupdate.html', orders=orders)
+    if request.method == "POST":
+        orderIP = id
+        customer = request.form.get("customer")
+        item = request.form.get("item")
+        total = request.form.get("total")
+        status = request.form.get("status")
+        #DB Connection
+        conn = get_db_connection()
+        dbexe = """UPDATE orders SET customer='{}', item='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, total, status, id)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/orders')
+
+@app.route('/orders/remove/<int:id>', methods=["GET","POST"] )
+def orderRemove(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        orders = conn.execute("SELECT * FROM orders WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('orderremove.html', orders=orders)
+    #DB Connection
+    if request.method == "POST":
+        userID = id
+        conn = get_db_connection()
+        dbexe = """DELETE FROM orders WHERE id = {}""".format(userID)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/orders')
+
+
+
 
 
 

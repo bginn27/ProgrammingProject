@@ -357,7 +357,7 @@ footer {
   
 }
 
-#inventory {
+#tabledata {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   border: 1px solid black;
@@ -366,7 +366,7 @@ footer {
   margin-right: auto;
 }
 
-#inventory td, #inventory th {
+#tabledata td, #inventory th {
   border: 1px solid #ddd;
   padding: 8px;
   background-color: #b1c5e1;
@@ -374,11 +374,11 @@ footer {
 
 
 
-#inventory tr:hover {
+#tabledata tr:hover {
   background-color: #7a92c0;
 }
 
-#inventory th {
+#tabledata th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;

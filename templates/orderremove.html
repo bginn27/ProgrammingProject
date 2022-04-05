@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+<table id="tabledata">
+
+    <tr>
+        <th>Order ID</th>
+        <th>Created</th>
+        <th>Updated</th>
+        <th>Customer</th>
+        <th>Item Ordered</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Remove</th>
+
+    </tr>  
+
+    {% for order in orders %}
+    <tr>  
+        
+        <td class="c2">{{order.id}}</td>
+        <td class="c3">{{order.created}}</td>   
+        <td class="c4">{{order.updated}}</td>
+        <td class="c5">{{order.customer}}</td>
+        <td class="c6">{{order.item}}></td>
+        <td class="c5">{{order.total}}</td>
+        <td class="c6">{{order.status}}></td>
+        <td> 
+            <form action="/inventory/remove/{{order.id}}" method="POST" id="remove_form">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record" form="remove_form"> 
+        </td>
+    </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}
