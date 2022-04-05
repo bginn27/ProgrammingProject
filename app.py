@@ -1,5 +1,5 @@
-from crypt import methods
 from fileinput import close
+import re
 import sqlite3
 from flask import Flask, render_template, request, url_for, redirect, flash
 from sqlalchemy import false
@@ -36,70 +36,15 @@ def login():
 def home():
     return render_template('home.html')
 
-# modify products in the table
-@app.route('/inventorymodify')
-def inventorymodify():
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM inventory').fetchall()
-    conn.close()
-    return render_template('inventorymodify.html')
-    
-@app.route('/create', methods=('GET', 'POST'))
-def create():
-    return render_template('create.html')
-
 
 # main inventory page
 @app.route('/inventory')
 def inventory():
     conn = get_db_connection()
     inventory = conn.execute("SELECT * FROM inventory").fetchall()
-    for item in inventory[0]:
-        print(item)
     conn.close()
     return render_template('inventory.html', inventory=inventory)
       
-    # conn = sqlite3.connect('database.db')
-    # cur = conn.cursor()
-    # add_inventory = cur.execute("""
-    # INSERT INTO inventory (id, itemName, description, location) 
-    # VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
-    # conn.commit()
-    # conn.close()
-    # return redirect("/inventory")
-
-@app.route('/inventory/<id>')
-def inventoryID(id):
-    if request.method == "GET":
-        conn = get_db_connection()
-        inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
-        for item in inventory[0]:
-            print(item)
-        conn.close()
-        return render_template('inventory.html', inventory=inventory)
-
-
-# remove row from table and return to main inventory page
-@app.route('/inventoryremove', methods=["GET","POST"] )
-def inventoryremove():
-    if request.method == "GET":
-        return render_template("inventoryremove.html")
-
-    if request.method == "POST":
-        itemNum = request.form.get("itemNum")
-        conn = get_db_connection()
-        conn.execute('DELETE FROM inventory WHERE id = ?', (itemNum,))
-        conn.commit()
-        conn.close()
-        return redirect("/inventory")
-
-
-
-# invoices page
-@app.route('/invoices', methods=["GET", "POST"])
-def invoices():
-    if request.method == "GET":
-        return render_template('invoices.html')
 
 # add info to table and return to main inventory page
 @app.route('/inventoryadd', methods=["GET", "POST"] )
@@ -112,6 +57,68 @@ def inventoryadd():
         itemName = request.form.get("itemName")
         description = request.form.get("description")
         location = request.form.get("location")
+       
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        add_inventory = cur.execute("""
+        INSERT INTO inventory (id, itemName, description, location) 
+        VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
+        conn.commit()
+        conn.close()
+        return redirect("/inventory")
+
+
+@app.route('/inventory/update/<int:id>', methods=["GET","POST"] )
+def inventoryUpdate(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('inventoryupdate.html', inventory=inventory)
+    if request.method == "POST":
+        itemNum = id
+        itemName = request.form.get("itemName")
+        description = request.form.get("description")
+        location = request.form.get("location")
+        #DB Connection
+        conn = get_db_connection()
+        dbexe = """UPDATE inventory SET itemName='{}', description='{}', location='{}' WHERE id={}""".format(itemName, description, location,itemNum)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/inventory')
+
+
+
+@app.route('/inventory/remove/<int:id>', methods=["GET","POST"] )
+def inventoryRemove(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('inventoryremove.html', inventory=inventory)
+    #DB Connection
+    if request.method == "POST":
+        itemNum = id
+        conn = get_db_connection()
+        dbexe = """DELETE FROM inventory WHERE id = {}""".format(itemNum)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/inventory')
+
+
+
+
+# invoices page
+@app.route('/invoices', methods=["GET", "POST"])
+def invoices():
+    if request.method == "GET":
+        return render_template('invoices.html')
+
+
 
 
 if __name__ == '__main__':

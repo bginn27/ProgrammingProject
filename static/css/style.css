@@ -60,7 +60,8 @@ a {
   z-index: 1999;
   position: absolute;
   top: 2rem;
-  width: 100%; }
+  width: 100%;
+ }
   .site-navbar.transparent {
     background: transparent; }
   .site-navbar.absolute {
@@ -70,6 +71,7 @@ a {
     width: 100%; }
   .site-navbar .site-logo {
     position: relative;
+    float: left;
     left: 0;
     font-size: 30px !important;
     width: 20em; }
@@ -369,9 +371,7 @@ footer {
   padding: 8px;
   background-color: #b1c5e1;
 }
-/* 
-#inventory tr::after
-{;} */
+
 
 
 #inventory tr:hover {
@@ -389,5 +389,31 @@ footer {
 table.center {
   margin-left: auto;
   margin-right: auto;
+}
+
+.formcontainer {
+  text-align: center;
+  width: 500px;
+  clear: both;
+  margin: auto
+
+}
+
+.formcontainer input {
+  width: 100%;
+  clear: both;
+}
+
+label {
+  float: left;
+  width: 10em;
+  margin-right: 1em;
+  text-align: left;
+  color: #ffffff;
+  }
+
+input {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
