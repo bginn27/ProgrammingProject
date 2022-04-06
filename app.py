@@ -1,4 +1,4 @@
-from crypt import methods
+# from crypt import methods
 from fileinput import close
 import sqlite3
 from flask import Flask, render_template, request, url_for, redirect, flash
@@ -59,14 +59,7 @@ def inventory():
     conn.close()
     return render_template('inventory.html', inventory=inventory)
       
-    # conn = sqlite3.connect('database.db')
-    # cur = conn.cursor()
-    # add_inventory = cur.execute("""
-    # INSERT INTO inventory (id, itemName, description, location) 
-    # VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
-    # conn.commit()
-    # conn.close()
-    # return redirect("/inventory")
+
 
 @app.route('/inventory/<id>')
 def inventoryID(id):
@@ -112,6 +105,15 @@ def inventoryadd():
         itemName = request.form.get("itemName")
         description = request.form.get("description")
         location = request.form.get("location")
+
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        add_inventory = cur.execute("""
+        INSERT INTO inventory (id, itemName, description, location) 
+        VALUES (?, ?, ?, ?)""",(itemNum, itemName, description, location))
+        conn.commit()
+        conn.close()
+        return redirect("/inventory")
 
 
 if __name__ == '__main__':
