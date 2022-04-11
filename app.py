@@ -88,12 +88,6 @@ def inventoryremove():
 
 
 
-# invoices page
-@app.route('/invoices', methods=["GET", "POST"])
-def invoices():
-    if request.method == "GET":
-        return render_template('invoices.html')
-
 # add info to table and return to main inventory page
 @app.route('/inventoryadd', methods=["GET", "POST"] )
 def inventoryadd():
