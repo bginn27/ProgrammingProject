@@ -391,3 +391,28 @@ table.center {
   margin-right: auto;
 }
 
+.formcontainer {
+  text-align: center;
+  width: 500px;
+  clear: both;
+  margin: auto
+
+}
+
+.formcontainer input {
+  width: 100%;
+  clear: both;
+}
+
+label {
+  float: left;
+  width: 10em;
+  margin-right: 1em;
+  text-align: left;
+  color: #ffffff;
+  }
+
+input {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+}
