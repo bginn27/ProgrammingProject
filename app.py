@@ -36,17 +36,17 @@ def login():
 def home():
     return render_template('home.html')
 
-# modify products in the table
-@app.route('/inventorymodify')
-def inventorymodify():
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM inventory').fetchall()
-    conn.close()
-    return render_template('inventorymodify.html')
+# # modify products in the table
+# @app.route('/inventorymodify')
+# def inventorymodify():
+#     conn = get_db_connection()
+#     posts = conn.execute('SELECT * FROM inventory').fetchall()
+#     conn.close()
+#     return render_template('inventorymodify.html')
     
-@app.route('/create', methods=('GET', 'POST'))
-def create():
-    return render_template('create.html')
+# @app.route('/create', methods=('GET', 'POST'))
+# def create():
+#     return render_template('create.html')
 
 
 # main inventory page
@@ -61,30 +61,30 @@ def inventory():
       
 
 
-@app.route('/inventory/<id>')
-def inventoryID(id):
-    if request.method == "GET":
-        conn = get_db_connection()
-        inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
-        for item in inventory[0]:
-            print(item)
-        conn.close()
-        return render_template('inventory.html', inventory=inventory)
+# @app.route('/inventory/<id>')
+# def inventoryID(id):
+#     if request.method == "GET":
+#         conn = get_db_connection()
+#         inventory = conn.execute("SELECT * FROM inventory WHERE id={}".format(id)).fetchall()
+#         for item in inventory[0]:
+#             print(item)
+#         conn.close()
+#         return render_template('inventory.html', inventory=inventory)
 
 
-# remove row from table and return to main inventory page
-@app.route('/inventoryremove', methods=["GET","POST"] )
-def inventoryremove():
-    if request.method == "GET":
-        return render_template("inventoryremove.html")
+# # remove row from table and return to main inventory page
+# @app.route('/inventoryremove', methods=["GET","POST"] )
+# def inventoryremove():
+#     if request.method == "GET":
+#         return render_template("inventoryremove.html")
 
-    if request.method == "POST":
-        itemNum = request.form.get("itemNum")
-        conn = get_db_connection()
-        conn.execute('DELETE FROM inventory WHERE id = ?', (itemNum,))
-        conn.commit()
-        conn.close()
-        return redirect("/inventory")
+#     if request.method == "POST":
+#         itemNum = request.form.get("itemNum")
+#         conn = get_db_connection()
+#         conn.execute('DELETE FROM inventory WHERE id = ?', (itemNum,))
+#         conn.commit()
+#         conn.close()
+#         return redirect("/inventory")
 
 
 
@@ -109,6 +109,45 @@ def inventoryadd():
         conn.close()
         return redirect("/inventory")
 
+@app.route('/orders/update/<int:id>', methods=["GET","POST"] )
+def orderUpdate(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        orders = conn.execute("SELECT * FROM orders WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('orderupdate.html', orders=orders)
+    if request.method == "POST":
+        orderIP = id
+        customer = request.form.get("customer")
+        item = request.form.get("item")
+        total = request.form.get("total")
+        status = request.form.get("status")
+        #DB Connection
+        conn = get_db_connection()
+        dbexe = """UPDATE orders SET customer='{}', item='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, total, status, id)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/orders')
+
+@app.route('/orders/remove/<int:id>', methods=["GET","POST"] )
+def orderRemove(id):
+    if request.method == "GET":
+        conn = get_db_connection()
+        orders = conn.execute("SELECT * FROM orders WHERE id={}".format(id)).fetchall()
+        conn.close()
+        return render_template('orderremove.html', orders=orders)
+    #DB Connection
+    if request.method == "POST":
+        userID = id
+        conn = get_db_connection()
+        dbexe = """DELETE FROM orders WHERE id = {}""".format(userID)
+        print(dbexe)
+        db_update = conn.execute(dbexe)
+        conn.commit()
+        conn.close()
+        return redirect('/orders')
 
 if __name__ == '__main__':
     app.run(debug=True)
