@@ -38,3 +38,33 @@ This will connect to the database and allow viewing, updating and deleting items
 {% endblock %}
 
 
+{% extends 'base2.html' %}
+
+{% block content %}
+
+<table id="tabledata">
+
+    <tr>
+        <th>UserID</th>
+        <th>username</th>
+        <th>Password</th>
+        <th>Update</th>
+
+    </tr>  
+
+    {% for user in users %}
+    <tr>  
+        
+        <td class="c2">{{user.id}}</td>  
+        <td class="c4"> <input type="text" id="username" name="username" placeholder={{user.username}} form="update_form" value="{{user.username}}"></td>
+        <td class="c5"><input type="password" id="password" name="password" placeholder={{user.password}} form="update_form"  value="{{user.password}}"></td>
+        <td> 
+            <form action="/users/update/{{user.id}}" method="POST" id="update_form">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Update Record" form="update_form"> 
+        </td>
+    </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}
