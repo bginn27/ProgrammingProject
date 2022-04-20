@@ -1,13 +1,13 @@
+
 {% extends 'base2.html' %}
 
 {% block content %}
 <h1>
-This will connect to the database and allow viewing, updating and deleting items
+This will connect to the database and allow viewing, updating and deleting users
 </h1>
 
 <table id="tabledata">
     <tr>
-        <th>User ID</th>
         <th>Username</th>
         <th>Password</th>
         <th>Update</th>
@@ -17,22 +17,20 @@ This will connect to the database and allow viewing, updating and deleting items
 
     {% for user in users %}
     <tr>  
-       <td class="c1"><SPAN>{{user.id}}</SPAN></td>
-       <td class="c2"><SPAN>{{user.username}}</SPAN></td>
-       <td class="c3"><SPAN>***********</SPAN></td>
+       <td class="c4"><SPAN>{{user.username}}</SPAN></td>
+       <td class="c5"><SPAN>*********</SPAN></td>
        <td> 
             <form action="/users/update/{{user.id}}" method="GET">
             <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 
              </form>
         </td>
         <td> 
-            <form action="/users/remove/{{user.id}}" method="DELETE">
+            <form action="/users/remove/{{user.id}}" method="POST">
             <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record"> 
             </form>
         </td>
     </tr>
     {% endfor %}
-    </table>
-    
+    </table>   
 
 {% endblock %}

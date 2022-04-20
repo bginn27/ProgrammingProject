@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>
-This will connect to the database and allow viewing, updating and deleting items
+This will connect to the database and allow viewing, updating and deleting users
 </h1>
 
 <table id="tabledata">
@@ -18,10 +18,10 @@ This will connect to the database and allow viewing, updating and deleting items
     {% for user in users %}
     <tr>  
        <td class="c1"><SPAN>{{user.id}}</SPAN></td>
-       <td class="c2"><SPAN>{{user.username}}</SPAN></td>
-       <td class="c3"><SPAN>***********</SPAN></td>
+       <td class="c2"><input type="text" id="username" name="username" placeholder={{user.username}} form="update_form" value="{{user.username}}"></td>
+       <td class="c6"><input type="password" id="password" name="password" form="update_form" value="{{user.password}}"></td>
        <td> 
-            <form action="/users/update/{{user.id}}" method="GET">
+            <form action="/users/update/{{user.id}}" method="POST">
             <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 
              </form>
         </td>
@@ -37,34 +37,3 @@ This will connect to the database and allow viewing, updating and deleting items
 
 {% endblock %}
 
-
-{% extends 'base2.html' %}
-
-{% block content %}
-
-<table id="tabledata">
-
-    <tr>
-        <th>UserID</th>
-        <th>username</th>
-        <th>Password</th>
-        <th>Update</th>
-
-    </tr>  
-
-    {% for user in users %}
-    <tr>  
-        
-        <td class="c2">{{user.id}}</td>  
-        <td class="c4"> <input type="text" id="username" name="username" placeholder={{user.username}} form="update_form" value="{{user.username}}"></td>
-        <td class="c5"><input type="password" id="password" name="password" placeholder={{user.password}} form="update_form"  value="{{user.password}}"></td>
-        <td> 
-            <form action="/users/update/{{user.id}}" method="POST" id="update_form">
-            <input type="submit" class="btn btn-secondary btn-sm" value="Update Record" form="update_form"> 
-        </td>
-    </tr>
-
-    {% endfor %}
-    </table>
-
-{% endblock %}
