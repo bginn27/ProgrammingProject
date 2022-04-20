@@ -1,0 +1,30 @@
+{% extends 'base2.html' %}
+
+{% block content %}
+
+<table id="tabledata">
+
+    <tr>
+        <th>UserID</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Remove</th>
+
+    </tr>  
+
+    {% for user in users %}
+    <tr>  
+        
+        <td class="c2">{{user.id}}</td>
+        <td class="c3">{{user.username}}</td>   
+        <td class="c4">{{user.password}}</td>
+        <td> 
+            <form action="/users/remove/{{user.id}}" method="POST" id="remove_form">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record" form="remove_form"> 
+        </td>
+    </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}

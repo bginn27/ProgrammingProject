@@ -6,26 +6,40 @@
 This will connect to the database and allow viewing, updating and deleting items
 </h1>
 
-<table id="inventory">
+<table id="tabledata">
     <tr>
         <th>Product ID</th>
         <th>Created</th>
+        <th>Updated</th>
         <th>Name</th>
         <th>Description</th>
         <th>Location</th>
+        <th>Update</th>
+        <th>Remove</th>
+
     </tr>  
 
     {% for item in inventory %}
     <tr>  
         <td class="c2">{{item.id}}</td>
        <td class="c3">{{item.created}}</td>
+       <td class="c3">{{item.updated}}</td>
        <td class="c4"><SPAN>{{item.itemName}}</SPAN></td>
        <td class="c5"><SPAN>{{item.description}}</SPAN></td>
        <td class="c5"><SPAN>{{item.location}}</SPAN></td>
+       <td> 
+            <form action="/inventory/update/{{item.id}}" method="GET">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 
+             </form>
+        </td>
+        <td> 
+            <form action="/inventory/remove/{{item.id}}" method="POST">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record"> 
+            </form>
+        </td>
     </tr>
     {% endfor %}
-    </table>
-    
+    </table>   
 
 {% endblock %}
 

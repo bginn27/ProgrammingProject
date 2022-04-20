@@ -27,86 +27,64 @@
     <!-- <link rel="stylesheet" href="css/style.css"> -->
     
     
-    <title>Inventory MGT System</title>
+    <title>Inventory Insight</title>
   </head>
   <body>
-
-
-    <div class="site-mobile-menu">
-      <div class="site-mobile-menu-header">
-        <div class="site-mobile-menu-close mt-3">
-          <span class="icon-close2 js-menu-toggle"></span>
-        </div>
-      </div>
-      <div class="site-mobile-menu-body"></div>
-    </div>
     
     <header class="site-navbar" role="banner">
-
       <div class="container">
         <div class="row align-items-center">
-          
           <div class="col-11 col-xl-2">
-            <h1 class="mb-0 site-logo"><a href="/" class="text-white mb-0">Ur Mom's Inventory MGT Systems</a></h1>
+            <h1 class="mb-0 site-logo"> 
+              <img src="static/images/hero_2.png" height="50" width="50" alt="Inventory Insight">
+              <a href="/" class="text-white mb-0"> Inventory Insight</a>
+            </h1>
           </div>
-          <div class="col-12 col-md-10 d-none d-xl-block">
-            <nav class="site-navigation position-relative text-right" role="navigation">
-
-              <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
-                <li class="active"><a href="/"><span>Home</span></a></li>
-                <li class="has-children">
-                  <a href="inventory"><span>Inventory</span></a>
-                  <ul class="dropdown arrow-top">
-                    <li><a href="inventoryform">Add</a></li>
-                    <li><a href="">Change</a></li>
-                    <li><a href="#">Remove</a></li>
-                    <!-- <li class="has-children"> -->
-                      <!-- <a href="#">Invent</a> -->
-                      <!-- <ul class="dropdown">
-                        <li><a href="#">Add</a></li>
-                        <li><a href="#">Menu Two</a></li>
-                        <li><a href="#">Menu Three</a></li>
-                        <li><a href="#">Menu Four</a></li>
-                      </ul> -->
-                    </li>
-                  </ul>
-                </li>
-                <li><a href="invoices"><span>Invoices</span></a></li>
-                <li><a href="orders"><span>Orders</span></a></li>
-                <li><a href="contacts"><span>Contacts</span></a></li>
-                <!-- <li><a href="contact.html"><span>Reports</span></a></li> -->
-              </ul>
-            </nav>
-          </div>
-
-
-          <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
-
-          </div>
-
-        </div>
+        <div class="col-12 col-md-10 d-xl-block">  
+          <nav class="site-navigation position-relative text-right" role="navigation">
+            <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+              <li class="active"><a href="/"><span>Home</span></a></li>
+              <li class="has-children">
+                <a href="inventory"><span>Inventory</span></a>
+                <ul class="dropdown arrow-top">
+                  <li><a href="inventory">View Inventory</a></li>
+                  <li><a href="inventoryadd">Add Inventory</a></li>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-children">
+                <a href="users"><span>Users</span></a>
+                <ul class="dropdown arrow-top">
+                  <li><a href="users">View Users</a></li>
+                  <li><a href="useradd">Add User</a></li>
+                  </li>
+                </ul>
+              </li>
+              <li class="has-children">
+                <a href="orders"><span>Orders</span></a>
+                <ul class="dropdown arrow-top">
+                  <li><a href="orders">View Orders</a></li>
+                  <li><a href="orderadd">Add Order</a></li>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="logout"><a href="/logout">Logout</a></li>
+            </ul>
+          </nav>
       </div>
       
     </header>
 
-    <!-- <link rel="background-image" href="{{ url_for('static', filename= 'imagaes/hero_1.jpg') }}">
-     -->
-    <!-- <div style="background-image: url"{{ url_for('static', filename='images/hero_1.jpg') }}"></div> -->
-    <!-- <image src="{{ url_for('static', filename='images/hero_1.jpg') }}"></image> -->
-
-
-    <!-- background-image: url("{{ url_for('static', filename='images/hero_1.jpg')}}"); -->
-
-    
     <div class="pages" >
         <hr class="rounded">
         {% block content %} 
+        
         {% endblock %}
     </div>
 
      
       <footer>
-        By <span>Brooke, Alex, Nick, Seth</span>
+        By <span>Brooke, Alex, Nick, & Seth</span>
       </footer>
   </body>
 </html>

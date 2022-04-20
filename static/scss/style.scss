@@ -5,6 +5,8 @@
 @import "bootstrap/mixins";
 
 
+
+
 body {
 	font-family: $font-family-sans-serif;
 	background-color: #fff;
@@ -33,7 +35,7 @@ body {
 	}
 }
 p {
-	color: darken(#ccc, 10%);
+	color: darken(rgb(5, 5, 5), 10%);
 	font-weight: 300;
 }
 h1, h2, h3, h4, h5, h6,
@@ -426,7 +428,8 @@ a {
 		}
 	}
 
+	
+
+
 	}
-
-
 }
