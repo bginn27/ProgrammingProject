@@ -60,7 +60,8 @@ a {
   z-index: 1999;
   position: absolute;
   top: 2rem;
-  width: 100%; }
+  width: 100%;
+ }
   .site-navbar.transparent {
     background: transparent; }
   .site-navbar.absolute {
@@ -70,6 +71,7 @@ a {
     width: 100%; }
   .site-navbar .site-logo {
     position: relative;
+    float: left;
     left: 0;
     font-size: 30px !important;
     width: 20em; }
@@ -335,6 +337,7 @@ a {
         width: auto; }
         .site-mobile-menu .site-nav-wrap[data-class="social"] > li:first-child a {
           padding-left: 15px !important; }
+
 footer {
   position: fixed;
   text-align: center;
@@ -368,8 +371,6 @@ footer {
   padding: 8px;
   background-color: #b1c5e1;
 }
-
-
 
 #tabledata tr:hover {
   background-color: #7a92c0;
