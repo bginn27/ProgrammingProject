@@ -17,12 +17,12 @@ This will connect to the database and allow viewing, updating and deleting items
     </tr> 
     {% for user in users %}
     <tr>  
-        <td class="c2">{{item.id}}</td>
-       <td class="c3">{{item.created}}</td>
-       <td class="c3">{{item.updated}}</td>
-       <td class="c4"><SPAN>{{item.customer}}</SPAN></td>
-       <td class="c5"><SPAN>{{item.item}}</SPAN></td>
-       <td class="c5"><SPAN>{{item.total}}</SPAN></td>
+        <td class="c2">{{orders.id}}</td>
+       <td class="c3">{{orders.created}}</td>
+       <td class="c3">{{orders.updated}}</td>
+       <td class="c4"><SPAN>{{orders.customer}}</SPAN></td>
+       <td class="c5"><SPAN>{{orders.item}}</SPAN></td>
+       <td class="c5"><SPAN>{{orders.total}}</SPAN></td>
        <td> 
             <form action="/users/update/{{order.id}}" method="GET">
             <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 

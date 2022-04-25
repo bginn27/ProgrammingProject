@@ -78,17 +78,15 @@ def inventoryadd():
         return render_template('inventoryadd.html')
    
     if request.method == "POST":
-        itemID = request.form.get("itemID")
         itemName = request.form.get("itemName")
         description = request.form.get("description")
-        quantity = request.form.get("quantity")
         location = request.form.get("location")
-        print(itemID)
+       
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_inventory = cur.execute("""
-        INSERT INTO inventory (id, itemName, description, quantity, location) 
-        VALUES (?, ?, ?, ?, ?)""",(itemID, itemName, description, quantity, location))
+        INSERT INTO inventory (itemName, description, location) 
+        VALUES (?, ?, ?)""",(itemName, description, location))
         conn.commit()
         conn.close()
         return redirect("/inventory")
