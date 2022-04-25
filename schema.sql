@@ -5,6 +5,7 @@ CREATE TABLE inventory (
     updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     itemName TEXT,
     description TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
     location TEXT NOT NULL
 );
 

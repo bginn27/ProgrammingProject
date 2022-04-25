@@ -8,11 +8,11 @@ with open('schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO inventory (itemName, description, location) VALUES ( ?, ?, ?)",
+cur.execute("INSERT INTO inventory (itemName, description, quantity, location) VALUES ( ?, ?, ?)",
             ('TestProduct1', 'Testing product 1', "School")
             )
 
-cur.execute("INSERT INTO inventory (itemName, description, location) VALUES (?, ?, ?)",
+cur.execute("INSERT INTO inventory (itemName, description, quantity, location) VALUES (?, ?, ?)",
             ('TestProduct2', 'Testing product 2', "School")
             )
 
