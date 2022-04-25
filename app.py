@@ -5,7 +5,7 @@ import re
 import sqlite3
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from sqlalchemy import false
-from werkzeug.exceptions import abort
+# from werkzeug.exceptions import abort
 
 app = Flask(__name__)
 app.secret_key = 'SecretKey'
@@ -153,7 +153,6 @@ def useradd():
     if request.method == "POST":
         username = request.form.get("username").lower()
         password = request.form.get("password")
-       
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_users = cur.execute("""

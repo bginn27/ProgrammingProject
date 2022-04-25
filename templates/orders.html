@@ -6,8 +6,32 @@
 <h1>
 This will connect to the database and allow viewing, updating and deleting items
 </h1>
+<table id="tabledata">
+    <tr>
+        <th>Customer</th>
+        <th>Item</th>
+        <th>Total</th>
+        <th>Update</th>
+        <th>Remove</th>
 
-
+    </tr> 
+    {% for user in users %}
+    <tr>  
+       <td class="c4"><SPAN>{{user.username}}</SPAN></td>
+       <td class="c5"><SPAN>*********</SPAN></td>
+       <td> 
+            <form action="/users/update/{{order.id}}" method="GET">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 
+             </form>
+        </td>
+        <td> 
+            <form action="/users/remove/{{user.id}}" method="POST">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record"> 
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>   
 {% endblock %}
 
 
