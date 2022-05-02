@@ -78,15 +78,17 @@ def inventoryadd():
         return render_template('inventoryadd.html')
    
     if request.method == "POST":
+        itemID = request.form.get("itemID")
         itemName = request.form.get("itemName")
+        quantity = request.form.get("quantity")
         description = request.form.get("description")
         location = request.form.get("location")
-       
+
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_inventory = cur.execute("""
-        INSERT INTO inventory (itemName, description, location) 
-        VALUES (?, ?, ?)""",(itemName, description, location))
+        INSERT INTO inventory (id,itemName, quantity, description, location) 
+        VALUES (?,?, ?, ?, ?)""",(itemID,itemName, quantity, description, location))
         conn.commit()
         conn.close()
         return redirect("/inventory")
@@ -103,6 +105,7 @@ def inventoryUpdate(id):
         itemNum = id
         itemName = request.form.get("itemName")
         description = request.form.get("description")
+        quantity = request.form.get("quantity")
         location = request.form.get("location")
         #DB Connection
         conn = get_db_connection()
@@ -218,13 +221,14 @@ def orderadd():
     if request.method == "POST":
         customer = request.form.get("customer")
         item = request.form.get("item")
+        quanity = request.form.get("quantity")
         total = request.form.get("total")
        
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_orders = cur.execute("""
-        INSERT INTO orders (customer,item,total,status) 
-        VALUES (?, ?, ?, ?)""",(customer, item, total, 'NEW'))
+        INSERT INTO orders (customer,item, quantity, total,status) 
+        VALUES (?, ?, ?, ?, ?)""",(customer, item, quanity, total, 'NEW'))
         conn.commit()
         conn.close()
         return redirect("/orders")
@@ -240,11 +244,12 @@ def orderUpdate(id):
         orderIP = id
         customer = request.form.get("customer")
         item = request.form.get("item")
+        quantity = request.form.get("quantity")
         total = request.form.get("total")
         status = request.form.get("status")
         #DB Connection
         conn = get_db_connection()
-        dbexe = """UPDATE orders SET customer='{}', item='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, total, status, id)
+        dbexe = """UPDATE orders SET customer='{}', item='{}', quantity='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, quantity, total, status, id)
         print(dbexe)
         db_update = conn.execute(dbexe)
         conn.commit()
