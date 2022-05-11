@@ -1,4 +1,4 @@
-{% extends 'base2.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -9,6 +9,7 @@
         <th>Created</th>
         <th>Name</th>
         <th>Description</th>
+        <th>Quantity</th>
         <th>Location</th>
         <th>Action</th>
 
@@ -21,6 +22,7 @@
         <td class="c3">{{item.created}}</td>   
         <td class="c4"> <input type="text" id="itemName" name="itemName" placeholder={{item.itemName}} form="update_form" value="{{item.itemName}}"></td>
         <td class="c5"><input type="text" id="description" name="description" placeholder={{item.description}} form="update_form"  value="{{item.description}}"></td>
+        <td class="c6"><input type="text" id="quantity" name="quantity" placeholder={{item.quantity}} form="update_form"  value="{{item.quantity}}"></td>
         <td class="c6"><input type="text" id="location" name="location" placeholder={{item.location}} form="update_form" value="{{item.location}}"></td>
         <td> 
             <form action="/inventory/update/{{item.id}}" method="POST" id="update_form">

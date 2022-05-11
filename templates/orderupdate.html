@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table id="tabledata">
+
+    <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Update</th>
+
+    </tr>  
+
+    {% for order in orders %}
+    <tr>  
+        
+        <td class="c2">{{order.id}}</td>
+        <td class="c4"> <input type="text" id="customer" name="customer" placeholder={{order.customer}} form="update_form" value="{{order.customer}}"></td>
+        <td class="c5"><input type="text" id="item" name="item" placeholder={{order.item}} form="update_form"  value="{{order.item}}"></td>
+        <td class="c6"><input type="text" id="quantity" name="quantity" placeholder={{order.quantity}} form="update_form"  value="{{order.quantity}}"></td>
+        <td class="c6"><input type="text" id="total" name="total" placeholder={{order.total}} form="update_form" value="{{order.total}}"></td>
+        <td class="c4"> <input type="text" id="status" name="status" placeholder={{order.status}} form="update_form" value="{{order.status}}"></td>
+
+        <td> 
+            <form action="/orders/update/{{order.id}}" method="POST" id="update_form">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Update Order" form="update_form"> 
+        </td>
+    </tr>
+
+    {% endfor %}
+    </table>
+
+{% endblock %}

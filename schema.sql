@@ -5,6 +5,7 @@ CREATE TABLE inventory (
     updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     itemName TEXT,
     description TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
     location TEXT NOT NULL
 );
 
@@ -23,6 +24,7 @@ CREATE TABLE orders (
     updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     customer TEXT,
     item INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     total REAL NOT NULL,
     status TEXT
 );

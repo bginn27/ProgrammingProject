@@ -6,8 +6,43 @@
 <h1>
 This will connect to the database and allow viewing, updating and deleting items
 </h1>
+<table id="tabledata">
+    <tr>
+        <th>Order ID</th>
+        <th>Created</th>
+        <th>Modified</th>
+        <th>Customer</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Update</th>
+        <th>Remove</th>
 
-
+    </tr> 
+    {% for order in orders %}
+    <tr>  
+        <td class="c2">{{order.id}}</td>
+       <td class="c3">{{order.created}}</td>
+       <td class="c3">{{order.updated}}</td>
+       <td class="c4"><SPAN>{{order.customer}}</SPAN></td>
+       <td class="c5"><SPAN>{{order.item}}</SPAN></td>
+       <td class="c5"><SPAN>{{order.quantity}}</SPAN></td>
+       <td class="c5"><SPAN>{{order.total}}</SPAN></td>
+       <td class="c5"><SPAN>{{order.status}}</SPAN></td>
+       <td> 
+            <form action="/orders/update/{{order.id}}" method="GET">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Update Record"> 
+             </form>
+        </td>
+        <td> 
+            <form action="/orders/remove/{{order.id}}" method="POST">
+            <input type="submit" class="btn btn-secondary btn-sm" value="Remove Record"> 
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>   
 {% endblock %}
 
 

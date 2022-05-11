@@ -5,7 +5,7 @@ import re
 import sqlite3
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from sqlalchemy import false
-from werkzeug.exceptions import abort
+# from werkzeug.exceptions import abort
 
 app = Flask(__name__)
 app.secret_key = 'SecretKey'
@@ -80,14 +80,15 @@ def inventoryadd():
     if request.method == "POST":
         itemID = request.form.get("itemID")
         itemName = request.form.get("itemName")
+        quantity = request.form.get("quantity")
         description = request.form.get("description")
         location = request.form.get("location")
-        print(itemID)
+
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_inventory = cur.execute("""
-        INSERT INTO inventory (id, itemName, description, location) 
-        VALUES (?, ?, ?, ?)""",(itemID, itemName, description, location))
+        INSERT INTO inventory (id,itemName, quantity, description, location) 
+        VALUES (?,?, ?, ?, ?)""",(itemID,itemName, quantity, description, location))
         conn.commit()
         conn.close()
         return redirect("/inventory")
@@ -104,10 +105,11 @@ def inventoryUpdate(id):
         itemNum = id
         itemName = request.form.get("itemName")
         description = request.form.get("description")
+        quantity = request.form.get("quantity")
         location = request.form.get("location")
         #DB Connection
         conn = get_db_connection()
-        dbexe = """UPDATE inventory SET itemName='{}', description='{}', location='{}', updated=CURRENT_TIMESTAMP WHERE id={}""".format(itemName, description, location,itemNum)
+        dbexe = """UPDATE inventory SET itemName='{}', description='{}', quantity='{}', location='{}', updated=CURRENT_TIMESTAMP WHERE id={}""".format(itemName, description, quantity, location, itemNum)
         print(dbexe)
         db_update = conn.execute(dbexe)
         conn.commit()
@@ -153,7 +155,6 @@ def useradd():
     if request.method == "POST":
         username = request.form.get("username").lower()
         password = request.form.get("password")
-       
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_users = cur.execute("""
@@ -220,13 +221,14 @@ def orderadd():
     if request.method == "POST":
         customer = request.form.get("customer")
         item = request.form.get("item")
+        quanity = request.form.get("quantity")
         total = request.form.get("total")
        
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
         add_orders = cur.execute("""
-        INSERT INTO orders (customer,item,total,status) 
-        VALUES (?, ?, ?, ?)""",(customer, item, total, 'NEW'))
+        INSERT INTO orders (customer,item, quantity, total,status) 
+        VALUES (?, ?, ?, ?, ?)""",(customer, item, quanity, total, 'NEW'))
         conn.commit()
         conn.close()
         return redirect("/orders")
@@ -242,11 +244,12 @@ def orderUpdate(id):
         orderIP = id
         customer = request.form.get("customer")
         item = request.form.get("item")
+        quantity = request.form.get("quantity")
         total = request.form.get("total")
         status = request.form.get("status")
         #DB Connection
         conn = get_db_connection()
-        dbexe = """UPDATE orders SET customer='{}', item='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, total, status, id)
+        dbexe = """UPDATE orders SET customer='{}', item='{}', quantity='{}', total='{}', status='{}' WHERE id={}""".format(customer, item, quantity, total, status, id)
         print(dbexe)
         db_update = conn.execute(dbexe)
         conn.commit()
